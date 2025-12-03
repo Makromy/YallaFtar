@@ -1,0 +1,5 @@
+{
+  "name": "YallaOrder - Collector Order Manager",
+  "description": "A collaborative breakfast order management system for teams. Create sessions, collect orders, track status, and generate consolidated vendor summaries.",
+  "requestFramePermissions": []
+}
