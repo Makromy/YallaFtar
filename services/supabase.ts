@@ -1,4 +1,3 @@
-
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
 import { Session, User, Restaurant, Order } from '../types';
 import { DEFAULT_RESTAURANT } from '../constants';
@@ -7,12 +6,8 @@ import { DEFAULT_RESTAURANT } from '../constants';
 const STORAGE_KEY_URL = 'yallaftar_sys_url';
 const STORAGE_KEY_KEY = 'yallaftar_sys_key';
 
-// Production config - replace with your actual Supabase credentials
-const PROD_SUPABASE_URL = 'https://your-project.supabase.co';
-const PROD_SUPABASE_KEY = 'your-anon-key-here';
-
-const storedUrl = localStorage.getItem(STORAGE_KEY_URL) || PROD_SUPABASE_URL;
-const storedKey = localStorage.getItem(STORAGE_KEY_KEY) || PROD_SUPABASE_KEY;
+const storedUrl = localStorage.getItem(STORAGE_KEY_URL) || 'https://xdyjbuykdqqbvparwclk.supabase.co';
+const storedKey = localStorage.getItem(STORAGE_KEY_KEY) || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhkeWpidXlrZHFxYnZwYXJ3Y2xrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQ2NjgwNTEsImV4cCI6MjA4MDI0NDA1MX0.wENsE8eFKiMNLScYe5z5glOcm9gxJ82KKR2FlL_UdwA';
 
 // Initialize with stored values or dummy values to prevent crash on load
 // We check isConfigured() before making calls.
@@ -351,6 +346,12 @@ export const api = {
     updateSessionOrders: async (sessionId: string, orders: Order[]) => {
         if (!systemConfig.isConfigured()) throw new Error("App not configured");
         const { error } = await supabase.from('sessions').update({ orders }).eq('id', sessionId);
+        if (error) throw new Error(error.message);
+    },
+
+    updateSessionFees: async (sessionId: string, fees: any) => {
+        if (!systemConfig.isConfigured()) throw new Error("App not configured");
+        const { error } = await supabase.from('sessions').update({ fees }).eq('id', sessionId);
         if (error) throw new Error(error.message);
     }
 };
